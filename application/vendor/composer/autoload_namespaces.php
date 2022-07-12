@@ -9,5 +9,5 @@ return array(
     'UpdateHelper\\' => array($vendorDir . '/kylekatarnls/update-helper/src'),
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
-    'Codecourse\\Notify\\' => array($vendorDir . '/codecourse/notify/src'),
+    'Codecourse\\Notify\\' => array($vendorDir . '/pandudud/notify/src'),
 );

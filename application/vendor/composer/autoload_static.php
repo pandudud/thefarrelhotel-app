@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitfb982b18bc20b073a91da8648e91ea7e
+class ComposerStaticInit7d7a37de1d545e67ba5705e01aa5903f
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -19,11 +19,11 @@ class ComposerStaticInitfb982b18bc20b073a91da8648e91ea7e
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
-        'd92e6dafb93e67e5b59c39d9b9d00659' => __DIR__ . '/..' . '/codecourse/notify/src/Codecourse/Notify/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         '5e8fe2a5ffaded85af682684fe3bbf5a' => __DIR__ . '/..' . '/mews/captcha/src/helpers.php',
+        '647261249d1ccc48b246906269da2f47' => __DIR__ . '/..' . '/pandudud/notify/src/Codecourse/Notify/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -371,7 +371,7 @@ class ComposerStaticInitfb982b18bc20b073a91da8648e91ea7e
         array (
             'Codecourse\\Notify\\' => 
             array (
-                0 => __DIR__ . '/..' . '/codecourse/notify/src',
+                0 => __DIR__ . '/..' . '/pandudud/notify/src',
             ),
         ),
     );
@@ -388,10 +388,10 @@ class ComposerStaticInitfb982b18bc20b073a91da8648e91ea7e
         'Carbon\\Laravel\\ServiceProvider' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Laravel/ServiceProvider.php',
         'Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
         'Carbon\\Upgrade' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Upgrade.php',
-        'Codecourse\\Notify\\Facades\\Notify' => __DIR__ . '/..' . '/codecourse/notify/src/Codecourse/Notify/Facades/Notify.php',
-        'Codecourse\\Notify\\Notifier' => __DIR__ . '/..' . '/codecourse/notify/src/Codecourse/Notify/Notifier.php',
-        'Codecourse\\Notify\\NotifyServiceProvider' => __DIR__ . '/..' . '/codecourse/notify/src/Codecourse/Notify/NotifyServiceProvider.php',
-        'Codecourse\\Notify\\Storage\\Session' => __DIR__ . '/..' . '/codecourse/notify/src/Codecourse/Notify/Storage/Session.php',
+        'Codecourse\\Notify\\Facades\\Notify' => __DIR__ . '/..' . '/pandudud/notify/src/Codecourse/Notify/Facades/Notify.php',
+        'Codecourse\\Notify\\Notifier' => __DIR__ . '/..' . '/pandudud/notify/src/Codecourse/Notify/Notifier.php',
+        'Codecourse\\Notify\\NotifyServiceProvider' => __DIR__ . '/..' . '/pandudud/notify/src/Codecourse/Notify/NotifyServiceProvider.php',
+        'Codecourse\\Notify\\Storage\\Session' => __DIR__ . '/..' . '/pandudud/notify/src/Codecourse/Notify/Storage/Session.php',
         'Collective\\Html\\Componentable' => __DIR__ . '/..' . '/laravelcollective/html/src/Componentable.php',
         'Collective\\Html\\Eloquent\\FormAccessible' => __DIR__ . '/..' . '/laravelcollective/html/src/Eloquent/FormAccessible.php',
         'Collective\\Html\\FormBuilder' => __DIR__ . '/..' . '/laravelcollective/html/src/FormBuilder.php',
@@ -970,6 +970,7 @@ class ComposerStaticInitfb982b18bc20b073a91da8648e91ea7e
         'GuzzleHttp\\Psr7\\StreamWrapper' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/StreamWrapper.php',
         'GuzzleHttp\\Psr7\\UploadedFile' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/UploadedFile.php',
         'GuzzleHttp\\Psr7\\Uri' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/Uri.php',
+        'GuzzleHttp\\Psr7\\UriComparator' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/UriComparator.php',
         'GuzzleHttp\\Psr7\\UriNormalizer' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/UriNormalizer.php',
         'GuzzleHttp\\Psr7\\UriResolver' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/UriResolver.php',
         'GuzzleHttp\\Psr7\\Utils' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/Utils.php',
@@ -3915,11 +3916,11 @@ class ComposerStaticInitfb982b18bc20b073a91da8648e91ea7e
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitfb982b18bc20b073a91da8648e91ea7e::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitfb982b18bc20b073a91da8648e91ea7e::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInitfb982b18bc20b073a91da8648e91ea7e::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitfb982b18bc20b073a91da8648e91ea7e::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitfb982b18bc20b073a91da8648e91ea7e::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7d7a37de1d545e67ba5705e01aa5903f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7d7a37de1d545e67ba5705e01aa5903f::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit7d7a37de1d545e67ba5705e01aa5903f::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit7d7a37de1d545e67ba5705e01aa5903f::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit7d7a37de1d545e67ba5705e01aa5903f::$classMap;
 
         }, null, ClassLoader::class);
     }

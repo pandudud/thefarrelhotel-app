@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Artisan</title>
+        <title>Nice Artisan</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
     </head>
 
@@ -14,19 +14,18 @@
 
             <br>
 
-            {{-- <h1 class="center-align">Nice Artisan</h1> --}}
+            <h1 class="center-align">Nice Artisan</h1>
 
             <nav>
                 <div class="nav-wrapper">
                     <ul id="nav-mobile" class="left hide-on-med-and-down">
-                        <li><a href="{{url('home')}}">Home</a></li>
                         @for ($i = 0; $i < count($options); $i++)
                             @if($i == 0)
-                                <li {!! request()->is('artisan') || request()->is('artisan/' . $options[$i]) ? 'class="active"' : '' !!}>
+                                <li {!! request()->is('niceartisan') || request()->is('niceartisan/' . $options[$i]) ? 'class="active"' : '' !!}>
                             @else
-                                <li {!! request()->is('artisan/' . $options[$i]) ? 'class="active"' : '' !!}>
+                                <li {!! request()->is('niceartisan/' . $options[$i]) ? 'class="active"' : '' !!}>
                             @endif
-                                    <a href="{!! url('artisan/' . $options[$i]) !!}">{{ ucfirst($options[$i]) }}</a>
+                                    <a href="{!! url('niceartisan/' . $options[$i]) !!}">{{ ucfirst($options[$i]) }}</a>
                                 </li>  
                         @endfor
                     </ul>

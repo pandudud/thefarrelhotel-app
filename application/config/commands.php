@@ -22,7 +22,7 @@ return [
         'make:middleware',
         'make:mail',
         'make:notification',
-    ],  
+    ],
 
     /*
     | Migrate commands
@@ -44,7 +44,7 @@ return [
         'route:clear',
         'route:list',
     ],
-    
+
     /*
     | Queue commands
     */
@@ -60,8 +60,8 @@ return [
         //'queue:listen',
         'queue:subscribe',
         'queue:table',
-    ],    
-    
+    ],
+
     /*
     | Config commands
     */
@@ -69,7 +69,7 @@ return [
         'config:cache',
         'config:clear',
     ],
-    
+
     /*
     | Cache commands
     */
@@ -78,12 +78,12 @@ return [
         'cache:table',
         'cache:forget',
     ],
-    
+
     /*
     | Miscellaneous commands
     */
     'miscellaneous' => [
-        'app:name', 
+        'app:name',
         'auth:clear-resets',
         'clear-compiled',
         'db:seed',
@@ -96,7 +96,7 @@ return [
         'schedule:finish',
         'serve',
         'session:table',
-        'storage:link',        
+        'storage:link',
         'vendor:publish',
         'view:clear',
     ],

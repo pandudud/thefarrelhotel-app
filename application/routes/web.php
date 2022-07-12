@@ -49,6 +49,10 @@ Route::group(['prefix' => '/', 'namespace' => 'App', 'middleware' => 'auth'], fu
 	    Route::resource('banner', 'BannerController');
 	    Route::post('banner/deleteGambar', 'BannerController@deleteGambar');
 
+		Route::get('icons', function() {
+			return view('pengaturan.icons.index');
+		});
+
 	});
 
 	Route::group(['prefix' => 'kamar', 'namespace' => 'Kamar'], function()

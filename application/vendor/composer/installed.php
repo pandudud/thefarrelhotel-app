@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'a937b32e804d5146abb13cea5948701b26914a27',
+        'reference' => 'bbdaef5bde758e267ef771e221c8b4f619e35025',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -17,15 +17,6 @@
             'install_path' => __DIR__ . '/../bestmomo/nice-artisan',
             'aliases' => array(),
             'reference' => 'd4da45b7a117ec90075b1307948d7f462cae7db7',
-            'dev_requirement' => false,
-        ),
-        'codecourse/notify' => array(
-            'pretty_version' => '1.1.1',
-            'version' => '1.1.1.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../codecourse/notify',
-            'aliases' => array(),
-            'reference' => '1abffc3d9a6d8ef79d9f2c0af0a1bcadc86bf4c1',
             'dev_requirement' => false,
         ),
         'cordoval/hamcrest-php' => array(
@@ -95,12 +86,12 @@
             'dev_requirement' => true,
         ),
         'guzzlehttp/psr7' => array(
-            'pretty_version' => '2.3.0',
-            'version' => '2.3.0.0',
+            'pretty_version' => '2.4.0',
+            'version' => '2.4.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
             'aliases' => array(),
-            'reference' => '83260bb50b8fc753c72d14dc1621a2dac31877ee',
+            'reference' => '13388f00956b1503577598873fffb5ae994b5737',
             'dev_requirement' => false,
         ),
         'hamcrest/hamcrest-php' => array(
@@ -343,7 +334,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'a937b32e804d5146abb13cea5948701b26914a27',
+            'reference' => 'bbdaef5bde758e267ef771e221c8b4f619e35025',
             'dev_requirement' => false,
         ),
         'laravel/tinker' => array(
@@ -452,6 +443,15 @@
             'install_path' => __DIR__ . '/../nikic/php-parser',
             'aliases' => array(),
             'reference' => '34bea19b6e03d8153165d8f30bba4c3be86184c1',
+            'dev_requirement' => false,
+        ),
+        'pandudud/notify' => array(
+            'pretty_version' => 'v1.0',
+            'version' => '1.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../pandudud/notify',
+            'aliases' => array(),
+            'reference' => '6a12a04d8965f7f1c711ce36309e1108e8223f8f',
             'dev_requirement' => false,
         ),
         'paragonie/random_compat' => array(
@@ -610,8 +610,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0.0',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '1.0.0',
             ),
         ),
         'psy/psysh' => array(
@@ -783,8 +783,8 @@
             'dev_requirement' => false,
         ),
         'symfony/event-dispatcher-contracts' => array(
-            'pretty_version' => 'v1.1.12',
-            'version' => '1.1.12.0',
+            'pretty_version' => 'v1.1.13',
+            'version' => '1.1.13.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/event-dispatcher-contracts',
             'aliases' => array(),
@@ -897,12 +897,12 @@
             'dev_requirement' => false,
         ),
         'symfony/translation-contracts' => array(
-            'pretty_version' => 'v1.1.12',
-            'version' => '1.1.12.0',
+            'pretty_version' => 'v1.1.13',
+            'version' => '1.1.13.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/translation-contracts',
             'aliases' => array(),
-            'reference' => 'c04dc8a7873a2a9196f038e99342df46b6661a29',
+            'reference' => '7462e5c4cb8b9cd152f992e8f10963b5641921f6',
             'dev_requirement' => false,
         ),
         'symfony/translation-implementation' => array(
@@ -921,12 +921,12 @@
             'dev_requirement' => false,
         ),
         'symfony/yaml' => array(
-            'pretty_version' => 'v4.4.37',
-            'version' => '4.4.37.0',
+            'pretty_version' => 'v4.4.43',
+            'version' => '4.4.43.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/yaml',
             'aliases' => array(),
-            'reference' => 'd7f637cc0f0cc14beb0984f2bb50da560b271311',
+            'reference' => '07e392f0ef78376d080d5353c081a5e5704835bd',
             'dev_requirement' => true,
         ),
         'tightenco/collect' => array(

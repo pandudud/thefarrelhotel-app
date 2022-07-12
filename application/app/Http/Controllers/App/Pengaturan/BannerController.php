@@ -52,7 +52,7 @@ class BannerController extends AppController
 
                 \Storage::makeDirectory('thumbnails/banners');
                 $img = \Image::make(storage_path('app/public/' . $path));
-                $img->resize(900, 900, function ($constraint) {
+                $img->resize(1600, 1600, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })->save(storage_path('app/public/thumbnails/' . $path));
