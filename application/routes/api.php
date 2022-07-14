@@ -36,10 +36,14 @@ Route::group(['prefix' => '', 'namespace' => 'Api'], function()
 
     Route::get('social-media', 'GeneralsController@socialMedia');
     Route::get('banner', 'GeneralsController@banner');
+    Route::get('contact', 'GeneralsController@contact');
 
     Route::group(['prefix' => 'home'], function()
     {
         Route::get('facility', 'HomeController@facility');
         Route::get('room', 'HomeController@room');
+        Route::get('social-media', 'HomeController@socialMedia');
+        Route::get('banner', 'HomeController@banner');
+        Route::get('contact', 'HomeController@contact');
     });
 });
