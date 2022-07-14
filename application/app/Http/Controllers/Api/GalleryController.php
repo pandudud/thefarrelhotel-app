@@ -11,7 +11,7 @@ class GalleryController extends Controller
     public function index(Request $request)
     {
         $page = $request->page ?: 1;
-        $pageSize = $request->page_size ?: 4;
+        $pageSize = $request->page_size ?: 12;
 
         $data = Gallery::paginate($pageSize);
         $dataPaginate = $data->toArray();

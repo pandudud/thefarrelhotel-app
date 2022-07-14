@@ -7,7 +7,6 @@ use Closure;
 class HandleCors
 {
     private static $allowedOriginsWhitelist = [
-        'http://localhost:3000'
     ];
 
     // All the headers must be a string
