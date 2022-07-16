@@ -20,7 +20,7 @@ class BannerController extends AppController
      */
     public function index(Request $request)
     {
-        $data = Banner::all();
+        $data = Banner::orderBy("urutan", "asc")->get();
         return view('pengaturan.banner.index', compact('data'));
     }
 
@@ -30,7 +30,7 @@ class BannerController extends AppController
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
+    {
         //dd('selet');
         return view('pengaturan.banner.create');
     }
@@ -89,7 +89,7 @@ class BannerController extends AppController
      */
     public function show($id)
     {
-        //
+        return redirect('pengaturan/banner');
     }
 
     /**
@@ -148,7 +148,8 @@ class BannerController extends AppController
      */
     public function destroy($id)
     {
-       try
+        // ! GA SIDO DIGAWE
+        try
         {
             $detail = Banner::where('id', $id)->first();
             if($detail) {
@@ -175,7 +176,10 @@ class BannerController extends AppController
         $path = $request->path;
         try
         {
-            Banner::destroy($id);
+            $banner = Banner::find($id);
+            $banner->urutan = null;
+            $banner->save();
+            $banner->delete();
             unlink(storage_path('app/public/'.$path));
             unlink(storage_path('app/public/thumbnails/'.$path));
             notify()->flash('Success!', 'success', [
@@ -189,5 +193,29 @@ class BannerController extends AppController
             ]);
         }
         return response()->json(url('pengaturan/banner'));
+    }
+
+    public function simpanUrutan(Request $request)
+    {
+        $urutan = $request->urutan;
+        DB::beginTransaction();
+        try
+        {
+            foreach ($urutan as $index => $id) {
+                $banner = Banner::find($id);
+                if($banner) {
+                    $banner->urutan = $index+1;
+                    $banner->save();
+                }
+            }
+            DB::commit();
+            return response()->json(url('pengaturan/banner'));
+        }
+        catch(\Illuminate\Database\QueryException $e)
+        {
+            DB::rollback();
+            return response()->json("error", 500);
+        }
+        return response()->json("error", 500);
     }
 }

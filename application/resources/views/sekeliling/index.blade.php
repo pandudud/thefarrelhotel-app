@@ -52,18 +52,18 @@
                                         <tr>
                                             <th>Around Name</th>
                                             <th>Around Description</th>
-                                            <th>Path</th>
+                                            <th>Gambar</th>
                                             <th>Link Map</th>
-                                            <th class="text-center" width="150">Action</th>
+                                            <th class="text-center" width="60">Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th class="form-group form-md-line-input">Around Name</th>
                                             <th class="form-group form-md-line-input">Around Description</th>
-                                            <th class="form-group form-md-line-input">Path</th>
+                                            <th class="form-group form-md-line-input">Gambar</th>
                                             <th class="form-group form-md-line-input">Link Map</th>
-                                            <th class="text-center" width="150">Action</th>
+                                            <th class="text-center" width="60">Action</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -93,14 +93,16 @@
             columns: [
                 {data: 'around_name', name: 'around_name'},
                 {data: 'around_description', name: 'around_description'},
-                {data: 'path', name: 'path'},
+                {data: 'path_html', name: 'path_html', render: function(data) {
+                    return '<a href="javascript:;" class="thumbnail"><img src="' + data + '" style="height: auto; width: 400px; display: block;"></a>';
+                }},
                 {data: 'link_map', name: 'link_map'},
                 {data: 'action', name: 'action', sClass: 'text-center', orderable: false, searchable: false}
             ],
             initComplete: function () {
                 this.api().columns().every(function (index) {
                     var column = this;
-                    if(index !== 4){
+                    if(index <= 1){
                         var input = document.createElement("input");
                         $(input).addClass('form-control');
                         $(input).appendTo($(column.footer()).empty())

@@ -22,11 +22,17 @@ class RoomController extends AppController
      */
     public function index(Request $request)
     {
+        // $data = Room::with('rrmroom', 'rrmroom.roomfacility')->get(); dd($data);
         if($request->ajax())
         {
-            $getData = Room::select('*')->where('rooms.deleted_at','=',null);
+            $data = Room::with('rrmroom', 'rrmroom.roomfacility');
 
-            $datatables = Datatables::of($getData)
+            $datatables = Datatables::of($data)
+                ->addColumn('facilities', function ($room) {
+                    return $room->rrmroom->map(function($rrm) {
+                        return str_limit($rrm->roomfacility->facility_name, 30, '...');
+                    })->implode('<br>');
+                })
                 ->addColumn('action', function ($value) {
 
                     $html =
@@ -39,7 +45,7 @@ class RoomController extends AppController
 
                     return $html;
                 })
-                ->rawColumns(['action']);
+                ->rawColumns(['facilities', 'action']);
             return $datatables->make(true);
         }
         return view('kamar.kamar-hotel.index');
@@ -192,9 +198,10 @@ class RoomController extends AppController
      */
     public function edit($id)
     {
-        $this->data['room_facility_id'] = RoomFacility::pluck('facility_name', 'id');
-        $this->data['room'] = Room::findOrFail($id);
-        return view('kamar.kamar-hotel.edit', $this->data);
+        $data['room_facility_id'] = RoomFacility::pluck('facility_name', 'id');
+        $data['room_facility_id_selected'] = RoomRoomFacility::where('room_id', $id)->pluck('room_facility_id');
+        $data['room'] = Room::findOrFail($id);
+        return view('kamar.kamar-hotel.edit', $data);
     }
 
     /**
@@ -207,11 +214,11 @@ class RoomController extends AppController
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-                'room_name' => 'required',
-                'room_name_eng' => 'required',
-                'room_price' => 'required',
-                'room_description' => 'required',
-                'room_description_eng' => 'required',
+            'room_name' => 'required',
+            'room_name_eng' => 'required',
+            'room_price' => 'required',
+            'room_description' => 'required',
+            'room_description_eng' => 'required',
         ]);
 
         DB::beginTransaction();
@@ -220,6 +227,7 @@ class RoomController extends AppController
             $room = Room::findOrFail($id);
             $room->room_name = $request->room_name;
             $room->room_name_eng = $request->room_name_eng;
+            $room->room_name_slug = str_slug($request->room_name);
             $room->room_price =$request->room_price;
             $room->room_description = $request->room_description;
             $room->room_description_eng = $request->room_description_eng;

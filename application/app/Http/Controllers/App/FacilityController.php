@@ -22,11 +22,10 @@ class FacilityController extends AppController
     {
         if($request->ajax())
         {
-            $getData = Facility::select('*')->where('facilities.deleted_at','=',null);
+            $data = Facility::query();
 
-            $datatables = Datatables::of($getData)
+            $datatables = Datatables::of($data)
                 ->addColumn('action', function ($value) {
-
                     $html =
                         '<a href="'.url('fasilitas/'.$value->id.'/ubah').'" class="btn btn-xs purple-sharp tooltips" title="Ubah Data"><i class="glyphicon glyphicon-edit"></i></a>'.
                         '&nbsp;'
@@ -36,7 +35,10 @@ class FacilityController extends AppController
 
                     return $html;
                 })
-                ->rawColumns(['action']);
+                ->addColumn('path_html', function ($value) {
+                    return $value->picture_url_thumb;
+                })
+                ->rawColumns(['path_html', 'action']);
             return $datatables->make(true);
         }
         return view('fasilitas.index');
@@ -48,8 +50,7 @@ class FacilityController extends AppController
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
-        //dd('selet');
+    {
         return view('fasilitas.create');
     }
 
@@ -62,11 +63,11 @@ class FacilityController extends AppController
     public function store(Request $request)
     {
         $this->validate($request, [
-                'facility_name' => 'required',
-                'facility_description' => 'required',
-                'facility_name_eng' => 'required',
-                'facility_description_eng' => 'required',
-                //'path' => 'required',
+            'facility_name' => 'required',
+            'facility_description' => 'required',
+            'facility_name_eng' => 'required',
+            'facility_description_eng' => 'required',
+            //'path' => 'required',
         ]);
 
         DB::beginTransaction();
@@ -145,21 +146,33 @@ class FacilityController extends AppController
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-                'facility_name' => 'required',
-                'facility_description' => 'required',
-                'facility_name_eng' => 'required',
-                'facility_description_eng' => 'required',
+            'facility_name' => 'required',
+            'facility_description' => 'required',
+            'facility_name_eng' => 'required',
+            'facility_description_eng' => 'required',
         ]);
 
         DB::beginTransaction();
         try
-        {   
-
+        {
             $facility = Facility::findOrFail($id);
             $facility->facility_name = $request->facility_name;
             $facility->facility_name_eng = $request->facility_name_eng;
             $facility->facility_description = $request->facility_description;
             $facility->facility_description_eng = $request->facility_description_eng;
+            if($request->file('path')) {
+                unlink(storage_path('app/public/'.$facility->path));
+                unlink(storage_path('app/public/thumbnails/'.$facility->path));
+                $path = $request->file('path')->store('facilities');
+                \Storage::makeDirectory('thumbnails/facilities');
+                $img = \Image::make(storage_path('app/public/' . $path));
+                $img->resize(600, 600, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->save(storage_path('app/public/thumbnails/' . $path));
+                $facility->path = $path;
+                $facility->path_thumb = 'thumbnails/'.$path;
+            }
             $facility->save();
 
             DB::commit();

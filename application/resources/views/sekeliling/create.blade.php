@@ -133,7 +133,6 @@
                                 <input name="file" type="file" multiple />
                             </div>
                         </div>
-                            
                     </div>
 
                     <div class="form-actions bottom">

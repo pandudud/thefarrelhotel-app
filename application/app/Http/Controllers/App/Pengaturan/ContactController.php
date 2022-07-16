@@ -26,7 +26,7 @@ class ContactController extends AppController
                 ->addColumn('action', function ($value) {
 
                     $html =
-                        '<a href="'.url('pengaturan/kontak/'.$value->contact_id.'/ubah').'" class="btn btn-xs purple-sharp tooltips" title="Ubah Data"><i class="glyphicon glyphicon-edit"></i></a>';
+                        '<a href="'.url('pengaturan/kontak/'.$value->id.'/ubah').'" class="btn btn-xs purple-sharp tooltips" title="Ubah Data"><i class="glyphicon glyphicon-edit"></i></a>';
                         
 
                     return $html;

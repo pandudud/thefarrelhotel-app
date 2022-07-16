@@ -14,9 +14,19 @@ class Banner extends Model
     protected $appends = ['banner_url', 'banner_url_thumb'];
 
     protected $fillable = [
-        'banner_path', 'created_at', 'updated_at'];
+        'banner_path', 'created_at', 'updated_at', 'urutan'];
 
     protected $dates = ['deleted_at'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::creating(function($model) {
+            $max = self::whereNull('deleted_at')->max('urutan');
+            $model->urutan = $max+1;
+        });
+    }
 
     public function getBannerUrlAttribute()
     {

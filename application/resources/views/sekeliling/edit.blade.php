@@ -4,6 +4,25 @@
 
 @push('styles')
 <link href="{{ assets('global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{assets('global/plugins/dropzone/dropzone.min.css')}}" rel="stylesheet" type="text/css" />
+<style>
+.dropzone .dz-preview .dz-image {
+    height: 100%;
+    width: 100%;
+}
+#thumbnail .btn-del {
+    display: none;
+    position: absolute;
+    right: 25px;
+    bottom: 35px;
+}
+.thumbnail {
+    display: inline-block;
+}
+#thumbnail:hover .btn-del {
+    display: unset;
+}
+</style>
 @endpush
 
 @section('content')
@@ -40,12 +59,12 @@
 
                     {!! Form::model($around, [
                         'method' => 'PATCH',
-                        'url' => ['sekeliling', $around->around_id],
-                        'class' => 'form-horizontal'
+                        'url' => ['sekeliling', $around->id],
+                        'class' => 'form-horizontal',
+                        'enctype' => 'multipart/form-data'
                     ]) !!}
 
                     <div class="form-body">
-
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <button class="close" data-close="alert"></button>
@@ -81,7 +100,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('around_description') ? 'has-error' : ''}}">
@@ -110,19 +129,6 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('path') ? 'has-error' : ''}}">
-                                    {!! Form::label('path', 'Picture', ['class' => 'control-label col-md-2'] ) !!}
-                                    <div class="col-md-10">
-                                        {!! Form::file('path', null, ['class' => 'form-control', 'id' => 'path'] ) !!}
-                                        <div class="form-control-focus"> </div>
-                                        <span class="help-block">{{ $errors->has('path') ? $errors->first('path') : 'Masukkan Gambar' }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('link_map') ? 'has-error' : ''}}">
                                     {!! Form::label('link_map', 'Link Map', ['class' => 'control-label col-md-2'] ) !!}
                                     <div class="col-md-10">
@@ -134,6 +140,26 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('path') ? 'has-error' : ''}}">
+                                    {!! Form::label('path', 'Picture', ['class' => 'control-label col-md-2'] ) !!}
+                                    @if(file_exists(storage_path('app/public/'.$around->path)))
+                                        <div class="col-md-2" id="thumbnail">
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{$around->picture_url_thumb}}" style="height: auto; width: 100%; display: block;">
+                                            </a>
+                                            <a class="btn btn-circle btn-icon-only red btn-del">
+                                                <i class="glyphicon glyphicon-trash"></i>
+                                            </a>
+                                        </div>
+                                    @endif
+                                    <div class="col-md-10" id="inputFile" style="display: none;">
+                                        {!! Form::file('path', ['class' => 'form-control'] ) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
 
@@ -159,8 +185,18 @@
 
 @push('plugins')
 <script src="{{ assets('global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+<script src="{{assets('global/plugins/dropzone/dropzone.min.js')}}" type="text/javascript"></script>
 @endpush
 
 @push('scripts')
 <script src="{{ assets('pages/scripts/sweetalert2-scripts.js') }}" type="text/javascript"></script>
+{{-- <script src="{{ assets('pages/scripts/form-dropzone-around-edit.js') }}" type="text/javascript"></script> --}}
+<script type="text/javascript">
+$(document).ready(function() {
+    $(".btn-del").click(function() {
+        $("#thumbnail").toggle();
+        $("#inputFile").toggle();
+    });
+});
+</script>
 @endpush

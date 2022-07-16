@@ -53,6 +53,7 @@
                                             <th>Room Name</th>
                                             <th>Room Price</th>
                                             <th>Room Description</th>
+                                            <th>Room Facilities</th>
                                             <th class="text-center" width="150">Action</th>
                                         </tr>
                                     </thead>
@@ -61,6 +62,7 @@
                                             <th class="form-group form-md-line-input">Room Name</th>
                                             <th class="form-group form-md-line-input">Room Price</th>
                                             <th class="form-group form-md-line-input">Room Description</th>
+                                            <th class="form-group form-md-line-input">Room Facilities</th>
                                             <th class="text-center" width="150">Action</th>
                                         </tr>
                                     </tfoot>
@@ -93,12 +95,13 @@
                 {data: 'room_name', name: 'room_name'},
                 {data: 'room_price', name: 'room_price'},
                 {data: 'room_description', name: 'room_description'},
+                {data: 'facilities', name: 'facilities'},
                 {data: 'action', name: 'action', sClass: 'text-center', orderable: false, searchable: false}
             ],
             initComplete: function () {
                 this.api().columns().every(function (index) {
                     var column = this;
-                    if(index !== 3){
+                    if(index !== 3 && index !== 4){
                         var input = document.createElement("input");
                         $(input).addClass('form-control');
                         $(input).appendTo($(column.footer()).empty())

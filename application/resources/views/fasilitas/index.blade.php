@@ -52,16 +52,16 @@
                                         <tr>
                                             <th>Facility Name</th>
                                             <th>Facility Description</th>
-                                            <th>Path</th>
-                                            <th class="text-center" width="150">Action</th>
+                                            <th>Gambar</th>
+                                            <th class="text-center" width="60">Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th class="form-group form-md-line-input">Facility Name</th>
                                             <th class="form-group form-md-line-input">Facility Description</th>
-                                            <th class="form-group form-md-line-input">Path</th>
-                                            <th class="text-center" width="150">Action</th>
+                                            <th class="form-group form-md-line-input">Gambar</th>
+                                            <th class="text-center" width="60">Action</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -91,13 +91,15 @@
             columns: [
                 {data: 'facility_name', name: 'facility_name'},
                 {data: 'facility_description', name: 'facility_description'},
-                {data: 'path', name: 'path'},
+                {data: 'path_html', name: 'path_html', render: function(data) {
+                    return '<a href="javascript:;" class="thumbnail"><img src="' + data + '" style="height: auto; width: 400px; display: block;"></a>';
+                }},
                 {data: 'action', name: 'action', sClass: 'text-center', orderable: false, searchable: false}
             ],
             initComplete: function () {
                 this.api().columns().every(function (index) {
                     var column = this;
-                    if(index !== 3){
+                    if(index <= 1){
                         var input = document.createElement("input");
                         $(input).addClass('form-control');
                         $(input).appendTo($(column.footer()).empty())

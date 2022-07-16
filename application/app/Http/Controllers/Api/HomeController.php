@@ -24,7 +24,7 @@ class HomeController extends ApiController
     }
     public function banner()
     {
-        $data = Banner::all();
+        $data = Banner::orderBy("urutan", "asc")->get();
         return response()->json($data);
     }
 

@@ -1,11 +1,6 @@
 var FormDropzone = function () {
-
-
     return {
-        //main function to initiate the module
         init: function () {
-        // console.log($('#my-dropzone').parents("form").attr('action'))
-
             Dropzone.options.myDropzone = {
                 url: $('#my-dropzone').parents("form").attr('action'),
                 autoProcessQueue: false,
@@ -21,8 +16,17 @@ var FormDropzone = function () {
                     var submitButton = document.querySelector("#submit");
                     var wrapperThis = this;
 
-                    submitButton.addEventListener("click", function () {
-                        wrapperThis.processQueue();
+                    submitButton.addEventListener("click", function (e) {
+                        e.preventDefault();
+                        swal({
+                            title: "Apakah anda yakin?",
+                            text: $(this).data("swa-text"),
+                            type: "warning",
+                            showCancelButton: true
+                        }).then(function() {
+                            App.blockUI();
+                            wrapperThis.processQueue();
+                        }).catch(swal.noop);
                     });
 
                     this.on("addedfile", function(file) {
@@ -37,14 +41,14 @@ var FormDropzone = function () {
 
                         // Listen to the click event
                         removeButton.addEventListener("click", function(e) {
-                          // Make sure the button click doesn't submit the form:
-                          e.preventDefault();
-                          e.stopPropagation();
+                            // Make sure the button click doesn't submit the form:
+                            e.preventDefault();
+                            e.stopPropagation();
 
-                          // Remove the file preview.
-                          _this.removeFile(file);
-                          // If you want to the delete the file on the server as well,
-                          // you can do the AJAX request here.
+                            // Remove the file preview.
+                            _this.removeFile(file);
+                            // If you want to the delete the file on the server as well,
+                            // you can do the AJAX request here.
                         });
 
                         // Add the button to the file preview element.
@@ -53,18 +57,25 @@ var FormDropzone = function () {
 
                     this.on("successmultiple", function(files, response) {
                         App.unblockUI();
-                        // window.location.href = response.redirect_url;
                         console.log(response);
+                        // window.location.href = response.redirect_url;
                     });
 
                     this.on('sendingmultiple', function (data, xhr, formData) {
+                        // console.log($("#around_name").val())
+                        formData.append("_method", "patch");
                         formData.append("around_name", $("#around_name").val());
                         formData.append("around_name_eng", $("#around_name_eng").val());
                         formData.append("around_description", $("#around_description").val());
                         formData.append("around_description_eng", $("#around_description_eng").val());
                         formData.append("link_map", $("#link_map").val());
-                        console.log(formData);
                     });
+
+                    // console.log(this);
+                    let mockFile = { name: "Sekeliling.jpg", size: 1 };
+                    this.emit("addedfile", mockFile);
+                    this.emit("thumbnail", mockFile, $("#fileExisting").val());
+                    this.emit("complete", mockFile);
                 }
             }
         }

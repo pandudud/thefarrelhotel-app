@@ -7,6 +7,7 @@
 <link href="{{ assets('global/plugins/morris/morris.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ assets('global/plugins/fullcalendar/fullcalendar.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ assets('global/plugins/jqvmap/jqvmap/jqvmap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ assets('global/plugins/lightbox2/css/lightbox.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('content')
@@ -52,7 +53,7 @@
             <div class="portlet-body">
                 @foreach ($data as $item)
                 <a href="{{ asset('application/public/storage') . '/' . $item->gallery_path }}" data-lightbox="gallery" data-title="{{$item->gallery_title}}">
-                    <img src="{{ asset('application/public/storage') . '/' . $item->gallery_path }}" style="max-height: 300px; max-width: 300px; height: auto; width: auto;" />
+                    <img src="{{ asset('application/public/storage') . '/' . $item->gallery_path_thumb }}" style="max-height: 300px; max-width: 300px; height: auto; width: auto;" />
                 </a>
                 @endforeach
         </div>
@@ -153,7 +154,6 @@
                 {data: 'room_name', name: 'room_name'},
                 {data: 'room_price', name: 'room_price'},
                 {data: 'room_description', name: 'room_description'},
-                
             ],
             initComplete: function () {
                 this.api().columns().every(function (index) {
@@ -182,7 +182,6 @@
             columns: [
                 {data: 'promotion_name', name: 'promotion_name'},
                 {data: 'promotion_description', name: 'promotion_description'},
-                
             ],
             initComplete: function () {
                 this.api().columns().every(function (index) {

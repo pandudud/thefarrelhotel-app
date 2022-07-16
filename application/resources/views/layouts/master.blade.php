@@ -75,7 +75,7 @@
                     <div class="page-content">
 
                         <!-- BEGIN THEME PANEL -->
-                        @include('includes.theme')
+                        {{-- @include('includes.theme') --}}
                         <!-- END THEME PANEL -->
 
                         <!-- BEGIN CONTENT -->

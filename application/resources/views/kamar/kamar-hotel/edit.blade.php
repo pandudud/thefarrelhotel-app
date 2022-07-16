@@ -126,7 +126,7 @@
                                 <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('room_facility_id') ? 'has-error' : ''}}">
                                     {!! Form::label('room_facility_id', 'Room Facility', ['class' => 'control-label col-md-2'] ) !!}
                                     <div class="col-md-10">
-                                        {!! Form::select('room_facility_id[]', $room_facility_id, null, ['class' => 'form-control select2', 'id' => 'room_facility_id', 'multiple'] ) !!}
+                                        {!! Form::select('room_facility_id[]', $room_facility_id, $room_facility_id_selected, ['class' => 'form-control select2', 'id' => 'room_facility_id', 'multiple'] ) !!}
                                         <div class="form-control-focus"> </div>
                                         <span class="help-block">{{ $errors->has('room_facility_id') ? $errors->first('room_facility_id') : 'Pilih Fasilitas Kamar' }}</span>
                                     </div>
@@ -160,4 +160,9 @@
 
 @push('scripts')
 <script src="{{ assets('pages/scripts/sweetalert2-scripts.js') }}" type="text/javascript"></script>
+<script>
+$(document).ready(function() {
+    // $(".select2").select2();
+});
+</script>
 @endpush

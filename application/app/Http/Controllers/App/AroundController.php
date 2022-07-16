@@ -26,7 +26,6 @@ class AroundController extends AppController
 
             $datatables = Datatables::of($getData)
                 ->addColumn('action', function ($value) {
-
                     $html =
                         '<a href="'.url('sekeliling/'.$value->id.'/ubah').'" class="btn btn-xs purple-sharp tooltips" title="Ubah Data"><i class="glyphicon glyphicon-edit"></i></a>'.
                         '&nbsp;'
@@ -35,6 +34,9 @@ class AroundController extends AppController
                         .\Form::close();
 
                     return $html;
+                })
+                ->addColumn('path_html', function ($value) {
+                    return $value->picture_url_thumb;
                 })
                 ->rawColumns(['action']);
             return $datatables->make(true);
@@ -48,8 +50,7 @@ class AroundController extends AppController
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
-        //dd('selet');
+    {
         return view('sekeliling.create');
     }
 
@@ -62,11 +63,11 @@ class AroundController extends AppController
     public function store(Request $request)
     {
         $this->validate($request, [
-                'around_name' => 'required',
-                'around_name_eng' => 'required',
-                'around_description' => 'required',
-                'around_description_eng' => 'required',
-                'link_map' => 'required',
+            'around_name' => 'required',
+            'around_name_eng' => 'required',
+            'around_description' => 'required',
+            'around_description_eng' => 'required',
+            'link_map' => 'required',
         ]);
 
         DB::beginTransaction();
@@ -121,7 +122,7 @@ class AroundController extends AppController
      */
     public function show($id)
     {
-        //
+        return redirect('sekeliling');
     }
 
     /**
@@ -132,8 +133,8 @@ class AroundController extends AppController
      */
     public function edit($id)
     {
-        $this->data['around'] = Around::findOrFail($id);
-        return view('sekeliling.edit', $this->data);
+        $data['around'] = Around::findOrFail($id);
+        return view('sekeliling.edit', $data);
     }
 
     /**
@@ -146,11 +147,11 @@ class AroundController extends AppController
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-                'around_name' => 'required',
-                'around_description' => 'required',
-                'around_name_eng' => 'required',
-                'around_description_eng' => 'required',
-                'link_map' => 'required',
+            'around_name' => 'required',
+            'around_description' => 'required',
+            'around_name_eng' => 'required',
+            'around_description_eng' => 'required',
+            'link_map' => 'required',
         ]);
 
         DB::beginTransaction();
@@ -161,8 +162,20 @@ class AroundController extends AppController
             $around->around_description = $request->around_description;
             $around->around_name_eng = $request->around_name_eng;
             $around->around_description_eng = $request->around_description_eng;
-            $around->path = $request->path;
             $around->link_map = $request->link_map;
+            if($request->file('path')) {
+                unlink(storage_path('app/public/'.$around->path));
+                unlink(storage_path('app/public/thumbnails/'.$around->path));
+                $path = $request->file('path')->store('arounds');
+                \Storage::makeDirectory('thumbnails/arounds');
+                $img = \Image::make(storage_path('app/public/' . $path));
+                $img->resize(600, 600, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->save(storage_path('app/public/thumbnails/' . $path));
+                $around->path = $path;
+                $around->path_thumb = 'thumbnails/'.$path;
+            }
             $around->save();
 
             DB::commit();

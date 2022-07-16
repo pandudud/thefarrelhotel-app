@@ -67,7 +67,7 @@
                 @foreach ($data as $item)
                 <span class="c_lightbox">
                     <a href="{{ asset('application/public/storage') . '/' . $item->gallery_path }}" data-lightbox="gallery" data-title="{{$item->gallery_title}}">
-                        <img src="{{ asset('application/public/storage') . '/' . $item->gallery_path }}" style="max-height: 400px; max-width: 400px; height: auto; width: auto;" />
+                        <img src="{{ asset('application/public/storage') . '/' . $item->gallery_path_thumb }}" style="max-height: 400px; max-width: 400px; height: auto; width: auto;" />
                     </a>
                     <a class="btn btn-circle btn-icon-only red btn-del" data-id="{{$item->id}}" data-path="{{$item->gallery_path}}">
                         <i class="glyphicon glyphicon-trash"></i>

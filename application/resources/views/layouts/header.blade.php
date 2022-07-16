@@ -24,15 +24,15 @@
             <ul class="nav navbar-nav pull-right">
 
                 <!-- BEGIN NOTIFICATION DROPDOWN -->
-                @include('includes.dropdown-notification')
+                {{-- @include('includes.dropdown-notification') --}}
                 <!-- END NOTIFICATION DROPDOWN -->
 
                 <!-- BEGIN INBOX DROPDOWN -->
-                @include('includes.dropdown-inbox')
+                {{-- @include('includes.dropdown-inbox') --}}
                 <!-- END INBOX DROPDOWN -->
 
                 <!-- BEGIN TASK DROPDOWN -->
-                @include('includes.dropdown-task')
+                {{-- @include('includes.dropdown-task') --}}
                 <!-- END TASK DROPDOWN -->
 
                 <!-- BEGIN USER LOGIN DROPDOWN -->
