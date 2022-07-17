@@ -62,7 +62,11 @@ class AroundController extends AppController
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        if(!$request->wantsJson() || !$request->ajax()) {
+            return redirect('sekeliling');
+        }
+
+        $validator = \Validator::make($request->all(), [
             'around_name' => 'required',
             'around_name_eng' => 'required',
             'around_description' => 'required',
@@ -70,10 +74,19 @@ class AroundController extends AppController
             'link_map' => 'required',
         ]);
 
+        if($validator->fails()) {
+            $errorMsg = '';
+            $errors = $validator->errors();
+            foreach ($errors->all() as $error) {
+                $errorMsg .= $error.'<br />';
+            }
+            return response()->json($errorMsg, 422);
+        }
+
         DB::beginTransaction();
         try
         {
-           foreach ($request->file as $file) {
+            foreach ($request->file as $file) {
                 $path = $file->store('arounds');
 
                 \Storage::makeDirectory('thumbnails/arounds');
@@ -89,29 +102,24 @@ class AroundController extends AppController
                 $around->around_description = $request->around_description;
                 $around->around_description_eng = $request->around_description_eng;
                 $around->link_map = $request->link_map;
-                //$facility->path = $request->path;
                 $around->path = $path;
                 $around->path_thumb = 'thumbnails/'.$path;
                 $around->save();
-                //dd($facility);
             }
             DB::commit();
-            //return response()->json($request->file);
-            return response()->json(['redirect_url' => url('sekeliling')]);
 
             notify()->flash('Success!', 'success', [
                 'text' => 'Data Sekeliling berhasil ditambah',
             ]);
+            return response()->json(['redirect_url' => url('sekeliling')]);
         }
         catch(\Illuminate\Database\QueryException $e)
         {
             DB::rollback();
             $pesan = config('app.debug') ? ' Pesan kesalahan: '.$e->getMessage() : '';
-            notify()->flash('Gagal!', 'error', [
-                'text' => 'Terjadi kesalahan pada database.'.$pesan,
-            ]);
+            return response()->json('Terjadi kesalahan pada database.'.$pesan, 500);
         }
-        return redirect('sekeliling');
+        return response()->json('error', 500);
     }
 
     /**
@@ -151,7 +159,7 @@ class AroundController extends AppController
             'around_description' => 'required',
             'around_name_eng' => 'required',
             'around_description_eng' => 'required',
-            'link_map' => 'required',
+            'link_map' => 'required'
         ]);
 
         DB::beginTransaction();

@@ -22,7 +22,6 @@ class RoomController extends AppController
      */
     public function index(Request $request)
     {
-        // $data = Room::with('rrmroom', 'rrmroom.roomfacility')->get(); dd($data);
         if($request->ajax())
         {
             $data = Room::with('rrmroom', 'rrmroom.roomfacility');
@@ -40,7 +39,7 @@ class RoomController extends AppController
                         '<a href="'.url('kamar/kamar-hotel/'.$value->id.'/ubah').'" class="btn btn-xs purple-sharp tooltips" title="Ubah Data"><i class="glyphicon glyphicon-edit"></i></a>'.
                         '&nbsp;'
                         .\Form::open([ 'method'  => 'post', 'route' => [ 'kamar-hotel.destroyroom', $value->id ], 'style' => 'display: inline-block;' ]).
-                        '<button class="btn btn-xs red-haze dt-btn tooltips" data-swa-text="Hapus Data Kamar '.$value->id.'?" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>'
+                        '<button class="btn btn-xs red-haze dt-btn tooltips" data-swa-text="Hapus Data '.$value->room_name.'?" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>'
                         .\Form::close();
 
                     return $html;
@@ -58,7 +57,6 @@ class RoomController extends AppController
      */
     public function create()
     {
-        //dd('selet');
         $data['room_facility_id'] = RoomFacility::pluck('facility_name', 'id');
         return view('kamar.kamar-hotel.create', $data);
     }
@@ -71,17 +69,30 @@ class RoomController extends AppController
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        $this->validate($request, [
-                'room_name' => 'required',
-                'room_price' => 'required',
-                'room_description' => 'required',
+        if(!$request->wantsJson() || !$request->ajax()) {
+            return redirect('sekeliling');
+        }
+
+        $validator = \Validator::make($request->all(), [
+            'room_name' => 'required',
+            'room_name_eng' => 'required',
+            'room_price' => 'required',
+            'room_description' => 'required',
+            'room_description_eng' => 'required',
         ]);
+
+        if($validator->fails()) {
+            $errorMsg = '';
+            $errors = $validator->errors();
+            foreach ($errors->all() as $error) {
+                $errorMsg .= $error.'<br />';
+            }
+            return response()->json($errorMsg, 422);
+        }
 
         DB::beginTransaction();
         try
         {
-            //$room_price = $request->room_price;
             $room = new Room();
             $room->room_name = $request->room_name;
             $room->room_name_eng = $request->room_name_eng;
@@ -124,21 +135,18 @@ class RoomController extends AppController
 
             DB::commit();
 
-            return response()->json(['redirect_url' => url('kamar/kamar-hotel')]);
-
             notify()->flash('Success!', 'success', [
                 'text' => 'Kamar berhasil ditambah',
             ]);
+            return response()->json(['redirect_url' => url('kamar/kamar-hotel')]);
         }
         catch(\Illuminate\Database\QueryException $e)
         {
             DB::rollback();
             $pesan = config('app.debug') ? ' Pesan kesalahan: '.$e->getMessage() : '';
-            notify()->flash('Gagal!', 'error', [
-                'text' => 'Terjadi kesalahan pada database.'.$pesan,
-            ]);
+            return response()->json('Terjadi kesalahan pada database.'.$pesan, 500);
         }
-        return redirect('kamar/kamar-hotel');
+        return response()->json('error', 500);
     }
 
     public function gambar($id)
@@ -296,6 +304,12 @@ class RoomController extends AppController
     {
        try
         {
+            $detail = DetailRoom::where('room_id', $id)->get();
+            foreach ($detail as $item) {
+                unlink(storage_path('app/public/'.$item->picture_path));
+                unlink(storage_path('app/public/thumbnails/'.$item->picture_path));
+            }
+
             RoomRoomFacility::where('room_id', $id)->delete();
             Room::destroy($id);
             notify()->flash('Success!', 'success', [

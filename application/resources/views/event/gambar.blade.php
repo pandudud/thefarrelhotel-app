@@ -3,7 +3,6 @@
 @section('title', $title)
 
 @push('styles')
-<link href="{{assets('global/plugins/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{assets('global/plugins/dropzone/dropzone.min.css')}}" rel="stylesheet" type="text/css" />
 @endpush
 
@@ -67,7 +66,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-3"></div>
-                                {!! Form::button('<i class="fa fa-check"></i> Simpan', ['class' => 'btn blue-sharp col-md-3 simpan', 'type' => 'submit', 'id' => 'submit', 'data-swa-text' => 'Menambahkan Gambar Event']) !!}
+                                {!! Form::button('<i class="fa fa-check"></i> Simpan', ['class' => 'btn blue-sharp col-md-3 simpan', 'id' => 'submit', 'data-swa-text' => 'Menambahkan Gambar Event']) !!}
                                 <a href="{{ url()->previous() }}" type="button" class="col-md-3 btn red-haze"><i class="fa fa-close"></i> Batal</a>
                                 <div class="col-md-3"></div>
                             </div>
@@ -89,7 +88,6 @@
 @endpush
 
 @push('scripts')
-<script src="{{ assets('pages/scripts/sweetalert2-scripts.js') }}" type="text/javascript"></script>
 <script src="{{ assets('pages/scripts/form-dropzone-eventroom.js') }}" type="text/javascript"></script>
 @endpush
 

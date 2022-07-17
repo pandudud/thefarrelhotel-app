@@ -40,7 +40,7 @@
 
                     {!! Form::model($promotion, [
                         'method' => 'PATCH',
-                        'url' => ['promosi', $promotion->promotion_id],
+                        'url' => ['promosi', $promotion->id],
                         'class' => 'form-horizontal'
                     ]) !!}
 
@@ -81,7 +81,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('promotion_description') ? 'has-error' : ''}}">
@@ -107,7 +107,6 @@
                                 </div>
                             </div>
                         </div>
-                        
 
                     </div>
 

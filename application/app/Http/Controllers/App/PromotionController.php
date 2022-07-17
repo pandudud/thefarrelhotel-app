@@ -49,8 +49,7 @@ class PromotionController extends AppController
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
-        //dd('selet');
+    {
         return view('promosi.create');
     }
 
@@ -62,12 +61,25 @@ class PromotionController extends AppController
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-                'promotion_name' => 'required',
-                'promotion_name_eng' => 'required',
-                'promotion_description' => 'required',
-                'promotion_description_eng' => 'required',
+        if(!$request->wantsJson() || !$request->ajax()) {
+            return redirect('promosi');
+        }
+
+        $validator = \Validator::make($request->all(), [
+            'promotion_name' => 'required',
+            'promotion_name_eng' => 'required',
+            'promotion_description' => 'required',
+            'promotion_description_eng' => 'required',
         ]);
+
+        if($validator->fails()) {
+            $errorMsg = '';
+            $errors = $validator->errors();
+            foreach ($errors->all() as $error) {
+                $errorMsg .= $error.'<br />';
+            }
+            return response()->json($errorMsg, 422);
+        }
 
         DB::beginTransaction();
         try
@@ -102,25 +114,21 @@ class PromotionController extends AppController
 
             DB::commit();
 
-            return response()->json(['redirect_url' => url('promosi')]);
-
             notify()->flash('Success!', 'success', [
-                'text' => 'Promosi berhasil ditambah',
+                'text' => 'Data Promosi berhasil ditambah',
             ]);
+            return response()->json(['redirect_url' => url('promosi')]);
         }
         catch(\Illuminate\Database\QueryException $e)
         {
             DB::rollback();
             $pesan = config('app.debug') ? ' Pesan kesalahan: '.$e->getMessage() : '';
-            notify()->flash('Gagal!', 'error', [
-                'text' => 'Terjadi kesalahan pada database.'.$pesan,
-            ]);
+            return response()->json('Terjadi kesalahan pada database.'.$pesan, 500);
         }
-        return redirect('promosi');
+        return response()->json('error', 500);
     }
     public function gambar($id)
     {
-       /* $event = Event::findOrFail($id);*/
         return view('promosi.gambar', compact('id'));
     }
 
@@ -171,7 +179,6 @@ class PromotionController extends AppController
      */
     public function show($id)
     {
-        //
         $data = DetailPromotion::where('promotion_id', $id)->get();
         return view('promosi.show', compact('data', 'id'));
     }
@@ -198,8 +205,8 @@ class PromotionController extends AppController
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-                'promotion_name' => 'required',
-                'promotion_description' => 'required'
+            'promotion_name' => 'required',
+            'promotion_description' => 'required'
         ]);
 
         DB::beginTransaction();
@@ -261,6 +268,12 @@ class PromotionController extends AppController
     {
        try
         {
+            $detail = DetailPromotion::where('promotion_id', $id)->get();
+            foreach ($detail as $item) {
+                unlink(storage_path('app/public/'.$item->picture_path));
+                unlink(storage_path('app/public/thumbnails/'.$item->picture_path));
+            }
+
             Promotion::destroy($id);
             notify()->flash('Success!', 'success', [
                 'text' => 'Promosi berhasil dihapus',

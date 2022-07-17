@@ -50,8 +50,7 @@ class EventController extends AppController
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
-        //dd('selet');
+    {
         return view('event.create');
     }
 
@@ -63,12 +62,25 @@ class EventController extends AppController
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-                'event_name' => 'required',
-                'event_name_eng' => 'required',
-                'event_description' => 'required',
-                'event_description_eng' => 'required',
+        if(!$request->wantsJson() || !$request->ajax()) {
+            return redirect('event');
+        }
+
+        $validator = \Validator::make($request->all(), [
+            'event_name' => 'required',
+            'event_name_eng' => 'required',
+            'event_description' => 'required',
+            'event_description_eng' => 'required',
         ]);
+
+        if($validator->fails()) {
+            $errorMsg = '';
+            $errors = $validator->errors();
+            foreach ($errors->all() as $error) {
+                $errorMsg .= $error.'<br />';
+            }
+            return response()->json($errorMsg, 422);
+        }
 
         DB::beginTransaction();
         try
@@ -81,7 +93,6 @@ class EventController extends AppController
             $event->event_description_eng = $request->event_description_eng;
             if($event->save())
             {
-
                 foreach ($request->file as $file) {
                     $path = $file->store('picture_events');
 
@@ -104,26 +115,22 @@ class EventController extends AppController
 
             DB::commit();
 
-            return response()->json(['redirect_url' => url('event')]);
-
             notify()->flash('Success!', 'success', [
-                'text' => 'Event berhasil ditambah',
+                'text' => 'Data Event berhasil ditambah',
             ]);
+            return response()->json(['redirect_url' => url('event')]);
         }
         catch(\Illuminate\Database\QueryException $e)
         {
             DB::rollback();
             $pesan = config('app.debug') ? ' Pesan kesalahan: '.$e->getMessage() : '';
-            notify()->flash('Gagal!', 'error', [
-                'text' => 'Terjadi kesalahan pada database.'.$pesan,
-            ]);
+            return response()->json('Terjadi kesalahan pada database.'.$pesan, 500);
         }
-        return redirect('event');
+        return response()->json('error', 500);
     }
 
     public function gambar($id)
     {
-       /* $event = Event::findOrFail($id);*/
         return view('event.gambar', compact('id'));
     }
 
@@ -174,7 +181,6 @@ class EventController extends AppController
      */
     public function show($id)
     {
-        //
         $data = DetailEvent::where('event_id', $id)->get();
         return view('event.show', compact('data', 'id'));
     }
@@ -264,6 +270,12 @@ class EventController extends AppController
        DB::beginTransaction();
         try
         {
+            $detail = DetailEvent::where('event_id', $id)->get();
+            foreach ($detail as $item) {
+                unlink(storage_path('app/public/'.$item->picture_event));
+                unlink(storage_path('app/public/thumbnails/'.$item->picture_event));
+            }
+
             Event::destroy($id);
             DB::commit();
             notify()->flash('Sukses!', 'success', [

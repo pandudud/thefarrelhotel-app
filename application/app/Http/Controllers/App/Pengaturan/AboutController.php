@@ -27,8 +27,6 @@ class AboutController extends AppController
 
                     $html =
                         '<a href="'.url('pengaturan/tentang-kami/'.$value->id.'/ubah').'" class="btn btn-xs purple-sharp tooltips" title="Ubah Data"><i class="glyphicon glyphicon-edit"></i></a>';
-                        
-
                     return $html;
                 })
                 ->rawColumns(['action']);
@@ -44,7 +42,7 @@ class AboutController extends AppController
      */
     public function create()
     {
-       //
+        return redirect('pengaturan/tentang-kami');
     }
 
     /**
@@ -55,7 +53,7 @@ class AboutController extends AppController
      */
     public function store(Request $request)
     {
-        //
+        return redirect('pengaturan/tentang-kami');
     }
 
     /**
@@ -125,6 +123,6 @@ class AboutController extends AppController
      */
     public function destroy($id)
     {
-        //
+        return redirect('pengaturan/tentang-kami');
     }
 }

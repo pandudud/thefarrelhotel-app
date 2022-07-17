@@ -21,8 +21,21 @@ var FormDropzone = function () {
                     var submitButton = document.querySelector("#submit");
                     var wrapperThis = this;
 
-                    submitButton.addEventListener("click", function () {
-                        wrapperThis.processQueue();
+                    submitButton.addEventListener("click", function (e) {
+                        if(wrapperThis.files.length == 0) {
+                            toastr["error"]("Harap tambahkan gambar yg akan diupload..", "Error");
+                            return;
+                        }
+                        e.preventDefault();
+                        swal({
+                            title: "Apakah anda yakin?",
+                            text: $(this).data("swa-text"),
+                            type: "warning",
+                            showCancelButton: true
+                        }).then(function() {
+                            App.blockUI();
+                            wrapperThis.processQueue();
+                        }).catch(swal.noop);
                     });
 
                     this.on("addedfile", function(file) {
@@ -58,12 +71,18 @@ var FormDropzone = function () {
                         formData.append("event_description", $("#event_description").val());
                         formData.append("event_description_eng", $("#event_description_eng").val());
                     });
+
+                    this.on("error", function(a, b, c) {
+                        App.unblockUI();
+                        wrapperThis.removeAllFiles();
+                        toastr["error"](b, "Error");
+                    });
                 }
             }
         }
     };
 }();
 
-jQuery(document).ready(function() {    
+jQuery(document).ready(function() {
    FormDropzone.init();
 });

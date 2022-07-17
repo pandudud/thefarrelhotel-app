@@ -62,12 +62,15 @@ class FacilityController extends AppController
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        if(!$request->wantsJson() || !$request->ajax()) {
+            return redirect('fasilitas');
+        }
+
+        $validator = \Validator::make($request->all(), [
             'facility_name' => 'required',
             'facility_description' => 'required',
             'facility_name_eng' => 'required',
             'facility_description_eng' => 'required',
-            //'path' => 'required',
         ]);
 
         DB::beginTransaction();
@@ -88,29 +91,24 @@ class FacilityController extends AppController
                 $facility->facility_name_eng = $request->facility_name_eng;
                 $facility->facility_description = $request->facility_description;
                 $facility->facility_description_eng = $request->facility_description_eng;
-
-                //$facility->path = $request->path;
                 $facility->path = $path;
                 $facility->path_thumb = 'thumbnails/'.$path;
                 $facility->save();
-                //dd($facility);
             }
             DB::commit();
-            return response()->json(['redirect_url' => url('fasilitas')]);
 
             notify()->flash('Success!', 'success', [
                 'text' => 'Data Fasilitas berhasil ditambah',
             ]);
+            return response()->json(['redirect_url' => url('fasilitas')]);
         }
         catch(\Illuminate\Database\QueryException $e)
         {
             DB::rollback();
             $pesan = config('app.debug') ? ' Pesan kesalahan: '.$e->getMessage() : '';
-            notify()->flash('Gagal!', 'error', [
-                'text' => 'Terjadi kesalahan pada database.'.$pesan,
-            ]);
+            return response()->json('Terjadi kesalahan pada database.'.$pesan, 500);
         }
-        return redirect('fasilitas');
+        return response()->json('error', 500);
     }
 
     /**
@@ -121,7 +119,7 @@ class FacilityController extends AppController
      */
     public function show($id)
     {
-        //
+        return redirect('fasilitas');
     }
 
     /**
@@ -149,7 +147,7 @@ class FacilityController extends AppController
             'facility_name' => 'required',
             'facility_description' => 'required',
             'facility_name_eng' => 'required',
-            'facility_description_eng' => 'required',
+            'facility_description_eng' => 'required'
         ]);
 
         DB::beginTransaction();

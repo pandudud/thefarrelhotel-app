@@ -31,7 +31,6 @@ class BannerController extends AppController
      */
     public function create()
     {
-        //dd('selet');
         return view('pengaturan.banner.create');
     }
 
@@ -43,7 +42,6 @@ class BannerController extends AppController
      */
     public function store(Request $request)
     {
-
         DB::beginTransaction();
         try
         {
@@ -113,15 +111,14 @@ class BannerController extends AppController
      */
     public function update(Request $request, $id)
     {
-
         DB::beginTransaction();
         try
         {
             /*foreach ($request->file as $file) {
-                    $path = $file->store('banners');
-                    $banner = Banner::findOrFail($id);
-                    $banner->banner_path = $path;
-                    $banner->save();
+                $path = $file->store('banners');
+                $banner = Banner::findOrFail($id);
+                $banner->banner_path = $path;
+                $banner->save();
             }*/
 
             DB::commit();

@@ -66,10 +66,9 @@ class GalleryController extends AppController
      */
     public function store(Request $request)
     {
-        // AJAX Request
-        // $this->validate($request, [
-        //     'file' => 'required'
-        // ]);
+        if(!$request->wantsJson() || !$request->ajax()) {
+            return redirect('galeri');
+        }
 
         DB::beginTransaction();
         try
@@ -91,21 +90,18 @@ class GalleryController extends AppController
             }
             DB::commit();
 
-            return response()->json(['redirect_url' => url('galeri')]);
-
             notify()->flash('Success!', 'success', [
-                'text' => 'Gambar Gallery berhasil ditambah',
+                'text' => 'Data Gallery berhasil ditambah',
             ]);
+            return response()->json(['redirect_url' => url('galeri')]);
         }
         catch(\Illuminate\Database\QueryException $e)
         {
             DB::rollback();
             $pesan = config('app.debug') ? ' Pesan kesalahan: '.$e->getMessage() : '';
-            notify()->flash('Gagal!', 'error', [
-                'text' => 'Terjadi kesalahan pada database.'.$pesan,
-            ]);
+            return response()->json('Terjadi kesalahan pada database.'.$pesan, 500);
         }
-        return redirect('galeri');
+        return response()->json('error', 500);
     }
 
     /**
@@ -116,7 +112,7 @@ class GalleryController extends AppController
      */
     public function show($id)
     {
-        //
+        return redirect('galeri');
     }
 
     /**

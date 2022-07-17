@@ -21,8 +21,21 @@ var FormDropzone = function () {
                     var submitButton = document.querySelector("#submit");
                     var wrapperThis = this;
 
-                    submitButton.addEventListener("click", function () {
-                        wrapperThis.processQueue();
+                    submitButton.addEventListener("click", function (e) {
+                        if(wrapperThis.files.length == 0) {
+                            toastr["error"]("Harap tambahkan gambar yg akan diupload..", "Error");
+                            return;
+                        }
+                        e.preventDefault();
+                        swal({
+                            title: "Apakah anda yakin?",
+                            text: $(this).data("swa-text"),
+                            type: "warning",
+                            showCancelButton: true
+                        }).then(function() {
+                            App.blockUI();
+                            wrapperThis.processQueue();
+                        }).catch(swal.noop);
                     });
 
 
@@ -62,6 +75,12 @@ var FormDropzone = function () {
                         formData.append("facility_name_eng", $("#facility_name_eng").val());
                         formData.append("facility_description", $("#facility_description").val());
                         formData.append("facility_description_eng", $("#facility_description_eng").val());
+                    });
+
+                    this.on("error", function(a, b, c) {
+                        App.unblockUI();
+                        wrapperThis.removeAllFiles();
+                        toastr["error"](b, "Error");
                     });
                 }
             }

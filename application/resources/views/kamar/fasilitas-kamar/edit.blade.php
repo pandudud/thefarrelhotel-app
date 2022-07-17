@@ -73,10 +73,19 @@
                             <div class="col-md-12">
                                 <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('icon_fa') ? 'has-error' : ''}}">
                                     {!! Form::label('icon_fa', 'Icon Fa', ['class' => 'control-label col-md-2'] ) !!}
-                                    <div class="col-md-10">
-                                        {!! Form::text('icon_fa', null, ['class' => 'form-control', 'id' => 'icon_fa', 'autofocus'] ) !!}
-                                        <div class="form-control-focus"> </div>
-                                        <span class="help-block">{{ $errors->has('icon_fa') ? $errors->first('icon_fa') : 'Masukkan Icon Fa' }}</span>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <div class="input-group-control">
+                                                {!! Form::text('icon_fa', null, ['class' => 'form-control', 'id' => 'icon_fa', 'autofocus'] ) !!}
+                                                <div class="form-control-focus"> </div>
+                                                <span class="help-block">{{ $errors->has('icon_fa') ? $errors->first('icon_fa') : 'Masukkan Icon Fa' }}</span>
+                                            </div>
+                                            <span class="input-group-btn btn-right">
+                                                <a type="button" class="btn green-haze" href="{{url('pengaturan/icons')}}" target="_blank"> Icon yang tersedia
+                                                    <i class="fa fa-external-link"></i>
+                                                </a>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

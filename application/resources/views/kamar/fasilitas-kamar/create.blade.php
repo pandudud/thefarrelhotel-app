@@ -2,11 +2,6 @@
 
 @section('title', $title)
 
-@push('styles')
-<link href="{{assets('global/plugins/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
-<link href="{{assets('global/plugins/dropzone/dropzone.min.css')}}" rel="stylesheet" type="text/css" />
-@endpush
-
 @section('content')
 <div class="page-bar margin-bottom-20">
     <ul class="page-breadcrumb">
@@ -70,15 +65,24 @@
                             <div class="col-md-12">
                                 <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('icon_fa') ? 'has-error' : ''}}">
                                     {!! Form::label('icon_fa', 'Icon Fa', ['class' => 'control-label col-md-2'] ) !!}
-                                    <div class="col-md-10">
-                                        {!! Form::text('icon_fa', null, ['class' => 'form-control', 'id' => 'icon_fa', 'autofocus'] ) !!}
-                                        <div class="form-control-focus"> </div>
-                                        <span class="help-block">{{ $errors->has('icon_fa') ? $errors->first('icon_fa') : 'Masukkan Icon Fa' }}</span>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <div class="input-group-control">
+                                                {!! Form::text('icon_fa', null, ['class' => 'form-control', 'id' => 'icon_fa', 'autofocus'] ) !!}
+                                                <div class="form-control-focus"> </div>
+                                                <span class="help-block">{{ $errors->has('icon_fa') ? $errors->first('icon_fa') : 'Masukkan Icon Fa' }}</span>
+                                            </div>
+                                            <span class="input-group-btn btn-right">
+                                                <a type="button" class="btn green-haze" href="{{url('pengaturan/icons')}}" target="_blank"> Icon yang tersedia
+                                                    <i class="fa fa-external-link"></i>
+                                                </a>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                            
+
                     </div>
 
                     <div class="form-actions bottom">
@@ -101,14 +105,6 @@
 </div>
 @endsection
 
-@push('plugins')
-<script src="{{assets('global/plugins/select2/js/select2.full.min.js')}}" type="text/javascript"></script>
-<script src="{{assets('global/plugins/dropzone/dropzone.min.js')}}" type="text/javascript"></script>
-@endpush
-
 @push('scripts')
 <script src="{{ assets('pages/scripts/sweetalert2-scripts.js') }}" type="text/javascript"></script>
-<script src="{{ assets('pages/scripts/form-dropzone-around.js') }}" type="text/javascript"></script>
 @endpush
-
-

@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('around_name_eng') ? 'has-error' : ''}}">
@@ -139,7 +139,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-3"></div>
-                                {!! Form::button('<i class="fa fa-check"></i> Simpan', ['class' => 'btn blue-sharp col-md-3 simpan', 'type' => 'submit', 'id' => 'submit', 'data-swa-text' => 'Menambahkan Data Sekeliling']) !!}
+                                {!! Form::button('<i class="fa fa-check"></i> Simpan', ['class' => 'btn blue-sharp col-md-3 simpan', 'id' => 'submit', 'data-swa-text' => 'Menambahkan Data Sekeliling']) !!}
                                 <a href="{{ url()->previous() }}" type="button" class="col-md-3 btn red-haze"><i class="fa fa-close"></i> Batal</a>
                                 <div class="col-md-3"></div>
                             </div>
@@ -161,7 +161,6 @@
 @endpush
 
 @push('scripts')
-<script src="{{ assets('pages/scripts/sweetalert2-scripts.js') }}" type="text/javascript"></script>
 <script src="{{ assets('pages/scripts/form-dropzone-around.js') }}" type="text/javascript"></script>
 @endpush
 

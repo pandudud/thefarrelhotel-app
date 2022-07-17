@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('room_description') ? 'has-error' : ''}}">
@@ -133,6 +133,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
 
                     <div class="form-actions bottom">
                         <div class="row">

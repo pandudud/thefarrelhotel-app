@@ -21,8 +21,21 @@ var FormDropzone = function () {
                     var submitButton = document.querySelector("#submit");
                     var wrapperThis = this;
 
-                    submitButton.addEventListener("click", function () {
-                        wrapperThis.processQueue();
+                    submitButton.addEventListener("click", function (e) {
+                        if(wrapperThis.files.length == 0) {
+                            toastr["error"]("Harap tambahkan gambar yg akan diupload..", "Error");
+                            return;
+                        }
+                        e.preventDefault();
+                        swal({
+                            title: "Apakah anda yakin?",
+                            text: $(this).data("swa-text"),
+                            type: "warning",
+                            showCancelButton: true
+                        }).then(function() {
+                            App.blockUI();
+                            wrapperThis.processQueue();
+                        }).catch(swal.noop);
                     });
 
                     this.on("addedfile", function(file) {
@@ -53,8 +66,8 @@ var FormDropzone = function () {
 
                     this.on("successmultiple", function(files, response) {
                         App.unblockUI();
-                        // window.location.href = response.redirect_url;
-                        console.log(response);
+                        // console.log(response);
+                        window.location.href = response.redirect_url;
                     });
 
                     this.on('sendingmultiple', function (data, xhr, formData) {
@@ -63,7 +76,12 @@ var FormDropzone = function () {
                         formData.append("around_description", $("#around_description").val());
                         formData.append("around_description_eng", $("#around_description_eng").val());
                         formData.append("link_map", $("#link_map").val());
-                        console.log(formData);
+                    });
+
+                    this.on("error", function(a, b, c) {
+                        App.unblockUI();
+                        wrapperThis.removeAllFiles();
+                        toastr["error"](b, "Error");
                     });
                 }
             }

@@ -3,7 +3,6 @@
 @section('title', $title)
 
 @push('styles')
-<link href="{{assets('global/plugins/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{assets('global/plugins/dropzone/dropzone.min.css')}}" rel="stylesheet" type="text/css" />
 @endpush
 
@@ -78,7 +77,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('event_description') ? 'has-error' : ''}}">
@@ -120,14 +119,14 @@
                                 <input name="file" type="file" multiple />
                             </div>
                         </div>
-                            
+
                     </div>
 
                     <div class="form-actions bottom">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-3"></div>
-                                {!! Form::button('<i class="fa fa-check"></i> Simpan', ['class' => 'btn blue-sharp col-md-3 simpan', 'type' => 'submit', 'id' => 'submit', 'data-swa-text' => 'Menambahkan Data Event']) !!}
+                                {!! Form::button('<i class="fa fa-check"></i> Simpan', ['class' => 'btn blue-sharp col-md-3 simpan', 'id' => 'submit', 'data-swa-text' => 'Menambahkan Data Event']) !!}
                                 <a href="{{ url()->previous() }}" type="button" class="col-md-3 btn red-haze"><i class="fa fa-close"></i> Batal</a>
                                 <div class="col-md-3"></div>
                             </div>
@@ -144,12 +143,10 @@
 @endsection
 
 @push('plugins')
-<script src="{{assets('global/plugins/select2/js/select2.full.min.js')}}" type="text/javascript"></script>
 <script src="{{assets('global/plugins/dropzone/dropzone.min.js')}}" type="text/javascript"></script>
 @endpush
 
 @push('scripts')
-<script src="{{ assets('pages/scripts/sweetalert2-scripts.js') }}" type="text/javascript"></script>
 <script src="{{ assets('pages/scripts/form-dropzone-promotion.js') }}" type="text/javascript"></script>
 @endpush
 
