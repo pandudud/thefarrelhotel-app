@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/u1711380/public_html/testing_deploy_app
+    - export DEPLOYPATH=/home/u1711380/public_html/app
     - /bin/cp -R application/app/* $DEPLOYPATH/application/app/
     - /bin/cp -R application/config/* $DEPLOYPATH/application/config/
     - /bin/cp -R application/resources/* $DEPLOYPATH/application/resources/
