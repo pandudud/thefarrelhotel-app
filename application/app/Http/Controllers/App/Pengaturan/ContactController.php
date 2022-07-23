@@ -101,6 +101,7 @@ class ContactController extends AppController
             $contact = Contact::findOrFail($id);
             $contact->contact_name = $request->contact_name;
             $contact->contact_phone = $request->contact_phone;
+            $contact->contact_phone_2 = $request->contact_phone_2;
             $contact->contact_email = $request->contact_email;
             $contact->contact_address = $request->contact_address;
             $contact->contact_website = $request->contact_website;

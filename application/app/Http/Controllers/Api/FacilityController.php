@@ -22,4 +22,11 @@ class FacilityController extends Controller
         ];
         return response()->json($return);
     }
+
+    public function show($slug)
+    {
+        $data = Facility::where('facility_name_slug', $slug)->first();
+        if($data) return response()->json($data);
+        return response()->json('No Data Found', 404);
+    }
 }

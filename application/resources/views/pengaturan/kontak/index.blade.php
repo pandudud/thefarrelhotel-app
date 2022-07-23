@@ -42,6 +42,7 @@
                                         <tr>
                                             <th>Contact Name</th>
                                             <th>Contact Phone</th>
+                                            <th>Contact Phone 2</th>
                                             <th>Contact Email</th>
                                             <th>Contact Address</th>
                                             <th>Contact Website</th>
@@ -52,6 +53,7 @@
                                         <tr>
                                             <th class="form-group form-md-line-input">Contact Name</th>
                                             <th class="form-group form-md-line-input">Contact Phone</th>
+                                            <th class="form-group form-md-line-input">Contact Phone 2</th>
                                             <th class="form-group form-md-line-input">Contact Email</th>
                                             <th class="form-group form-md-line-input">Contact Address</th>
                                             <th class="form-group form-md-line-input">Contact Website</th>
@@ -85,6 +87,7 @@
             columns: [
                 {data: 'contact_name', name: 'contact_name'},
                 {data: 'contact_phone', name: 'contact_phone'},
+                {data: 'contact_phone_2', name: 'contact_phone_2'},
                 {data: 'contact_email', name: 'contact_email'},
                 {data: 'contact_address', name: 'contact_address'},
                 {data: 'contact_website', name: 'contact_website'},
@@ -93,7 +96,7 @@
             initComplete: function () {
                 this.api().columns().every(function (index) {
                     var column = this;
-                    if(index !== 5){
+                    if(index !== 6){
                         var input = document.createElement("input");
                         $(input).addClass('form-control');
                         $(input).appendTo($(column.footer()).empty())

@@ -91,6 +91,9 @@ class FacilityController extends AppController
                 $facility->facility_name_eng = $request->facility_name_eng;
                 $facility->facility_description = $request->facility_description;
                 $facility->facility_description_eng = $request->facility_description_eng;
+                $facility->facility_detail = $request->facilit_detail;
+                $facility->facility_detail_eng = $request->facilit_detail_eng;
+                $facility->facility_name_slug = str_slug($facility->facility_name);
                 $facility->path = $path;
                 $facility->path_thumb = 'thumbnails/'.$path;
                 $facility->save();
@@ -158,6 +161,9 @@ class FacilityController extends AppController
             $facility->facility_name_eng = $request->facility_name_eng;
             $facility->facility_description = $request->facility_description;
             $facility->facility_description_eng = $request->facility_description_eng;
+            $facility->facility_detail = $request->facilit_detail;
+            $facility->facility_detail_eng = $request->facilit_detail_eng;
+            $facility->facility_name_slug = str_slug($facility->facility_name);
             if($request->file('path')) {
                 unlink(storage_path('app/public/'.$facility->path));
                 unlink(storage_path('app/public/thumbnails/'.$facility->path));

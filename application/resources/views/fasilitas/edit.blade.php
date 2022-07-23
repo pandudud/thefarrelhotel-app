@@ -125,6 +125,32 @@
 
                         <div class="row">
                             <div class="col-md-12">
+                                <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('facility_detail') ? 'has-error' : ''}}">
+                                    {!! Form::label('facility_detail', 'Facility Detail ID', ['class' => 'control-label col-md-2'] ) !!}
+                                    <div class="col-md-10">
+                                        {!! Form::textarea('facility_detail', null, ['class' => 'form-control', 'id' => 'facility_detail', 'autofocus'] ) !!}
+                                        <div class="form-control-focus"> </div>
+                                        <span class="help-block">{{ $errors->has('facility_detail') ? $errors->first('facility_detail') : 'Masukkan Detail Fasilitas Bahasa Indonesia' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('facility_detail_eng') ? 'has-error' : ''}}">
+                                    {!! Form::label('facility_detail_eng', 'Facility Detail English', ['class' => 'control-label col-md-2'] ) !!}
+                                    <div class="col-md-10">
+                                        {!! Form::textarea('facility_detail_eng', null, ['class' => 'form-control', 'id' => 'facility_detail_eng', 'autofocus'] ) !!}
+                                        <div class="form-control-focus"> </div>
+                                        <span class="help-block">{{ $errors->has('facility_detail_eng') ? $errors->first('facility_detail_eng') : 'Masukkan Detail Fasilitas Bahasa Inggris' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
                                 <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('path') ? 'has-error' : ''}}">
                                     {!! Form::label('path', 'Picture', ['class' => 'control-label col-md-2'] ) !!}
                                     @if(file_exists(storage_path('app/public/'.$facility->path)))

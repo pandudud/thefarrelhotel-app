@@ -75,6 +75,8 @@ var FormDropzone = function () {
                         formData.append("facility_name_eng", $("#facility_name_eng").val());
                         formData.append("facility_description", $("#facility_description").val());
                         formData.append("facility_description_eng", $("#facility_description_eng").val());
+                        formData.append("facility_detail", $("#facility_detail").val());
+                        formData.append("facility_detail_eng", $("#facility_detail_eng").val());
                     });
 
                     this.on("error", function(a, b, c) {

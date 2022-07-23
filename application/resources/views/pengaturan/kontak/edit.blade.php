@@ -82,6 +82,18 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
+                                <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('contact_phone') ? 'has-error' : ''}}">
+                                    {!! Form::label('contact_phone_2', 'Phone Number 2', ['class' => 'control-label col-md-2'] ) !!}
+                                    <div class="col-md-10">
+                                        {!! Form::text('contact_phone_2', null, ['class' => 'form-control', 'id' => 'contact_phone_2', 'autofocus'] ) !!}
+                                        <div class="form-control-focus"> </div>
+                                        <span class="help-block">{{ $errors->has('contact_phone_2') ? $errors->first('contact_phone_2') : 'Masukkan Nomor Telephone' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
                                 <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('contact_email') ? 'has-error' : ''}}">
                                     {!! Form::label('contact_email', 'Email', ['class' => 'control-label col-md-2'] ) !!}
                                     <div class="col-md-10">
