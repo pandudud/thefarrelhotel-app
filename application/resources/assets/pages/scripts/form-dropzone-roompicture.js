@@ -65,6 +65,10 @@ var FormDropzone = function () {
                         window.location.href = response.redirect_url;
                     });
 
+                    this.on('sendingmultiple', function (data, xhr, formData) {
+                        formData.append("room_id", $("#room_id").val());
+                    });
+
                     this.on("error", function(a, b, c) {
                         App.unblockUI();
                         wrapperThis.removeAllFiles();

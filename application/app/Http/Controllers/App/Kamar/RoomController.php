@@ -162,9 +162,17 @@ class RoomController extends AppController
         {
             foreach ($request->file as $file) {
                 $path = $file->store('picture_rooms');
+                \Storage::makeDirectory('thumbnails/picture_rooms');
+                $img = \Image::make(storage_path('app/public/' . $path));
+                $img->resize(900, 900, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->save(storage_path('app/public/thumbnails/' . $path));
+
                 $modelDetail = new DetailRoom();
                 $modelDetail->room_id = $request->room_id;
                 $modelDetail->picture_path = $path;
+                $modelDetail->picture_path_thumb = 'thumbnails/'.$path;
                 $modelDetail->save();
             }
             DB::commit();
